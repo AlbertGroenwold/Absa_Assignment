@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\G985139\\source\\repos\\ABSA_Assignment\\ABSA_Assignment.csproj": {}
+    "C:\\ABSA_Assignment\\ABSA_Assignment.csproj": {}
   },
   "projects": {
-    "c:\\Users\\G985139\\source\\repos\\ABSA_Assignment\\ABSA_Assignment.csproj": {
+    "C:\\ABSA_Assignment\\ABSA_Assignment.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\G985139\\source\\repos\\ABSA_Assignment\\ABSA_Assignment.csproj",
+        "projectUniqueName": "C:\\ABSA_Assignment\\ABSA_Assignment.csproj",
         "projectName": "ABSA_Assignment",
-        "projectPath": "c:\\Users\\G985139\\source\\repos\\ABSA_Assignment\\ABSA_Assignment.csproj",
-        "packagesPath": "C:\\Users\\G985139\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\G985139\\source\\repos\\ABSA_Assignment\\obj\\",
+        "projectPath": "C:\\ABSA_Assignment\\ABSA_Assignment.csproj",
+        "packagesPath": "C:\\Users\\ajgro\\.nuget\\packages\\",
+        "outputPath": "C:\\ABSA_Assignment\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\G985139\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ajgro\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -41,6 +38,10 @@
       "frameworks": {
         "netstandard2.0": {
           "dependencies": {
+            "ExtentReports": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",
@@ -58,7 +59,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
