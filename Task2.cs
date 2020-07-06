@@ -18,6 +18,8 @@ namespace ABSA_Assignment
 
         private static IList<string> users = new List<string>();
 
+        private static int maxLoop = 5;
+
         private static readonly string url = "http://www.way2automation.com/angularjs-protractor/webtables/";
 
         private static readonly By header = By.XPath(@"//tr[@class= 'smart-table-header-row']//th");
@@ -38,7 +40,7 @@ namespace ABSA_Assignment
 
         public static AventStack.ExtentReports.ExtentReports run()
         {
-            AventStack.ExtentReports.ExtentReports report = CreateTest("ValidateUserIsPresent");
+            var report = CreateTest("ValidateUserIsPresent", null, "Task2");
 
             driver = LaunchDriver();
 
@@ -143,7 +145,7 @@ namespace ABSA_Assignment
             }
             catch
             {
-                return Fail("Could not enter "+input+" into " + ele.ToString()); ;
+                return Fail("Could not enter " + input + " into " + ele.ToString()); ;
             }
         }
 
@@ -158,16 +160,30 @@ namespace ABSA_Assignment
             }
             catch
             {
-                return Fail("Could not select "+ input + " from " + ele.ToString()); ;
+                return Fail("Could not select " + input + " from " + ele.ToString()); ;
             }
         }
 
         private static string getUser(int num = 1)
         {
+            string user = "";
+            bool go = false;
 
-            string user = "User" + num;
+            while (!go && num <= maxLoop)
+            {
+                user = "User" + num;
+                if (users.Contains(user))
+                {
+                    go = false;
+                    ++num;
+                }
+                else
+                {
+                    go = true;
+                }
+            }
 
-            if (users.Contains(user)) getUser(num++);
+            users.Add(user);
 
             return user;
         }
@@ -214,15 +230,15 @@ namespace ABSA_Assignment
         {
             DataTable table = LoadTable();
 
-            foreach (DataRow row in table.Rows)
+            foreach (string user in users)
             {
-                foreach (string user in users)
+                foreach (DataRow row in table.Rows)
                 {
-                    if (row["User Name"].ToString().Equals(user)) Pass(user + "has been added");
+                    if (row["User Name"].ToString().Equals(user)) { Pass(user + "has been added"); break; }
                 }
             }
 
-            return Fail("Not all new users was added.");
+            return null;
         }
 
         private static Rootobject LoadJson()

@@ -24,7 +24,7 @@ namespace ABSA_Assignment
         public static AventStack.ExtentReports.ExtentReports GetList()
         {
 
-            AventStack.ExtentReports.ExtentReports report = CreateTest("Get List");
+            AventStack.ExtentReports.ExtentReports report = CreateTest("Get List",null, "Task1");
 
             IRestResponse response = Get("https://dog.ceo/api/breeds/list/all");
 

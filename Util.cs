@@ -12,7 +12,7 @@ namespace ABSA_Assignment
     {
 
         private static ExtentTest curTest;
-        private static string path = AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\Reports\";
+        private static string path;
 
         public static IRestResponse Get(string api)
         {
@@ -24,9 +24,9 @@ namespace ABSA_Assignment
             return response;
         }
 
-        public static AventStack.ExtentReports.ExtentReports CreateReport(string test)
+        public static AventStack.ExtentReports.ExtentReports CreateReport(string test, string task)
         {
-            path += DateTime.Now.ToString("HH-mm dd-MM-yyyy") + @"\";
+            path = AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\Reports\"+task+@"\" + DateTime.Now.ToString("HH-mm dd-MM-yyyy") + @"\";
             var htmlReport = new ExtentHtmlReporter(path);
             var report = new AventStack.ExtentReports.ExtentReports();
             report.AttachReporter(htmlReport);
@@ -36,11 +36,11 @@ namespace ABSA_Assignment
             return report;
         }
 
-        public static AventStack.ExtentReports.ExtentReports CreateTest(string TestName, AventStack.ExtentReports.ExtentReports report = null)
+        public static AventStack.ExtentReports.ExtentReports CreateTest(string TestName, AventStack.ExtentReports.ExtentReports report = null, string task = null)
         {
             if (report == null)
             {
-                report = CreateReport(TestName);
+                report = CreateReport(TestName,task);
             }
             else
             {
