@@ -1,0 +1,23 @@
+{
+    "users": [
+      {
+        "firstName": "FName1",
+        "lastName": "LName1",
+        "password": "Pass1",
+        "customer": "Company AAA",
+        "role": "Admin",
+        "email": "admin@mail.com",
+        "cellPhone": "08255"
+      },
+      {
+        "firstName": "FName2",
+        "lastName": "LName2",
+        "password": "Pass2",
+        "customer": "Company BBB",
+        "role": "Customer",
+        "email": "customer@mail.com",
+        "cellPhone": "083444"
+      }
+    ]
+}
+
