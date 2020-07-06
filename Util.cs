@@ -12,7 +12,7 @@ namespace ABSA_Assignment
     {
 
         private static ExtentTest curTest;
-        private static string path = AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\Reports\" + DateTime.Now.ToString("HH-mm dd-MM-yyyy") + @"\";
+        private static string path = AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\Reports\";
 
         public static IRestResponse Get(string api)
         {
@@ -26,6 +26,7 @@ namespace ABSA_Assignment
 
         public static AventStack.ExtentReports.ExtentReports CreateReport(string test)
         {
+            path += DateTime.Now.ToString("HH-mm dd-MM-yyyy") + @"\";
             var htmlReport = new ExtentHtmlReporter(path);
             var report = new AventStack.ExtentReports.ExtentReports();
             report.AttachReporter(htmlReport);

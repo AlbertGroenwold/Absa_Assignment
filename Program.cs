@@ -7,11 +7,13 @@ namespace ABSA_Assignment
     {
         static void Main(string[] args)
         {
-            var report = Task1.run();
+            var reportTask1 = Task1.run();
 
-            report = Task2.run();
+            reportTask1.Flush();
 
-            report.Flush();
+            var reportTask2 = Task2.run();
+
+            reportTask2.Flush();
         }
     }
 }
