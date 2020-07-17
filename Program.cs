@@ -20,28 +20,18 @@ namespace ABSA_Assignment
             }
         }
 
-        [TestInitialize]
-        public void TestInitialize()
-        {
-        }
-
-        [TestMethod]
+        [TestMethod, TestCategory("Task1")]
         public void Task1()
         {
             Task1 runner = new Task1();
             runner.Run();
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("Task2")]
         public void Task2()
         {
             Task2 runner = new Task2();
             runner.Run();
-        }
-
-        [TestCleanup]
-        public void TestCleanup()
-        {
         }
     }
 }
