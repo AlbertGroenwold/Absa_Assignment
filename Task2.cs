@@ -4,53 +4,49 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace ABSA_Assignment
 {
     class Task2 : Util
     {
-        private static ChromeDriver driver;
+        private readonly IList<string> users = new List<string>();
 
-        private static IList<string> users = new List<string>();
+        private readonly int maxLoops = 5;
 
-        private static int maxLoop = 5;
+        private readonly string url = "http://www.way2automation.com/angularjs-protractor/webtables/";
 
-        private static readonly string url = "http://www.way2automation.com/angularjs-protractor/webtables/";
+        private readonly By header = By.XPath(@"//tr[@class= 'smart-table-header-row']//th");
+        private readonly By body = By.XPath(@"//table[@table-title='Smart Table example']//tbody//tr//td");
+        private readonly By addUser = By.XPath("//button[@type='add']");
 
-        private static readonly By header = By.XPath(@"//tr[@class= 'smart-table-header-row']//th");
-        private static readonly By body = By.XPath(@"//table[@table-title='Smart Table example']//tbody//tr//td");
-        private static readonly By addUser = By.XPath("//button[@type='add']");
+        private readonly By firstName = By.XPath("//input[@name='FirstName']");
+        private readonly By lastName = By.XPath("//input[@name='LastName']");
+        private readonly By userName = By.XPath("//input[@name='UserName']");
+        private readonly By password = By.XPath("//input[@name='Password']");
+        private readonly By customerAAA = By.XPath("//input[@value='15']");
+        private readonly By customerBBB = By.XPath("//input[@value='16']");
+        private readonly By role = By.XPath("//select[@name='RoleId']");
+        private readonly By email = By.XPath("//input[@name='Email']");
+        private readonly By cellPhone = By.XPath("//input[@name='Mobilephone']");
 
-        private static readonly By firstName = By.XPath("//input[@name='FirstName']");
-        private static readonly By lastName = By.XPath("//input[@name='LastName']");
-        private static readonly By userName = By.XPath("//input[@name='UserName']");
-        private static readonly By password = By.XPath("//input[@name='Password']");
-        private static readonly By customerAAA = By.XPath("//input[@value='15']");
-        private static readonly By customerBBB = By.XPath("//input[@value='16']");
-        private static readonly By role = By.XPath("//select[@name='RoleId']");
-        private static readonly By email = By.XPath("//input[@name='Email']");
-        private static readonly By cellPhone = By.XPath("//input[@name='Mobilephone']");
+        private  readonly By save = By.XPath("//button[text()='Save']");
 
-        private static readonly By save = By.XPath("//button[text()='Save']");
-
-        public static AventStack.ExtentReports.ExtentReports run()
+        public void Run()
         {
-            var report = CreateTest("ValidateUserIsPresent", null, "Task2");
+            CreateTest("ValidateUserIsPresent", "Task2");
 
-            driver = LaunchDriver();
+            LaunchDriver();
 
             Navigate(url);
 
             ValidateUserIsPresent("User Name", "novak");
 
-            CreateTest("Create new users", report);
+            CreateTest("Create new users");
 
-            var users = LoadJson().users;
+            var users = LoadJson().Users;
 
             IList<string> newUserName = new List<string>();
 
@@ -59,117 +55,48 @@ namespace ABSA_Assignment
 
                 Click(addUser);
 
-                Enter(firstName, user.firstName);
+                Enter(firstName, user.FirstName);
 
-                Enter(lastName, user.lastName);
+                Enter(lastName, user.LastName);
 
                 string value = getUser();
                 newUserName.Add(value);
 
                 Enter(userName, value);
 
-                Enter(password, user.password);
+                Enter(password, user.Password);
 
-                if (user.customer.Contains("AAA")) Click(customerAAA);
-                else if (user.customer.Contains("BBB")) Click(customerBBB);
+                if (user.Customer.Contains("AAA")) Click(customerAAA);
+                else if (user.Customer.Contains("BBB")) Click(customerBBB);
 
-                Select(role, user.role);
+                Select(role, user.Role);
 
-                Enter(email, user.email);
+                Enter(email, user.Email);
 
-                Enter(cellPhone, user.cellPhone);
+                Enter(cellPhone, user.CellPhone);
 
                 Pass("User details entered");
 
                 Click(save);
             }
 
-            CreateTest("Validate new users", report);
+            CreateTest("Validate new users");
 
             ValidateNewUsersIsPresent(newUserName);
 
-            Pass("Task 2 Completed");
+            EndTest("Task 2 Completed");
 
-            ShutDown(driver);
-
-            return report;
+            ShutDown();
         }
 
-        private static string Navigate(string url)
-        {
-            driver.Navigate().GoToUrl(url);
+        
 
-            return null;
-        }
-
-        private static string Click(By ele)
-        {
-            try
-            {
-                driver.FindElement(ele).Click();
-                return null;
-            }
-            catch
-            {
-                return Fail("Could not click - " + ele.ToString()); ;
-            }
-        }
-
-        private static string Wait(By ele, int num)
-        {
-            try
-            {
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(num));
-                wait.Until(drv => drv.FindElement(ele));
-                wait.Until(drv => drv.FindElement(ele).Displayed);
-                wait.Until(drv => drv.FindElement(ele).Enabled);
-
-                return null;
-            }
-            catch
-            {
-                return Fail("Could not wait for - " + ele.ToString()); ;
-            }
-        }
-
-        private static string Enter(By ele, string input)
-        {
-            try
-            {
-                IWebElement element = driver.FindElement(ele);
-                element.Click();
-                element.Clear();
-                element.SendKeys(input);
-
-                return null;
-            }
-            catch
-            {
-                return Fail("Could not enter " + input + " into " + ele.ToString()); ;
-            }
-        }
-
-        private static string Select(By ele, string input)
-        {
-            try
-            {
-                SelectElement element = new SelectElement(driver.FindElement(ele));
-                element.SelectByText(input);
-
-                return null;
-            }
-            catch
-            {
-                return Fail("Could not select " + input + " from " + ele.ToString()); ;
-            }
-        }
-
-        private static string getUser(int num = 1)
+        private string getUser(int num = 1)
         {
             string user = "";
             bool go = false;
 
-            while (!go && num <= maxLoop)
+            while (!go && num <= maxLoops)
             {
                 user = "User" + num;
                 if (users.Contains(user))
@@ -188,10 +115,10 @@ namespace ABSA_Assignment
             return user;
         }
 
-        private static DataTable LoadTable()
+        private DataTable LoadTable()
         {
-            IList<IWebElement> cols = driver.FindElements(header).ToList();
-            IList<IWebElement> rows = driver.FindElements(body).ToList();
+            IList<IWebElement> cols = FindElements(header);
+            IList<IWebElement> rows = FindElements(body);
 
             DataTable table = new DataTable();
 
@@ -212,7 +139,7 @@ namespace ABSA_Assignment
             return table;
         }
 
-        private static string ValidateUserIsPresent(string colName, string value)
+        private string ValidateUserIsPresent(string colName, string value)
         {
             DataTable table = LoadTable();
 
@@ -226,7 +153,7 @@ namespace ABSA_Assignment
             return Fail("Could not find the user");
         }
 
-        private static string ValidateNewUsersIsPresent(IList<string> users)
+        private string ValidateNewUsersIsPresent(IList<string> users)
         {
             DataTable table = LoadTable();
 
@@ -241,7 +168,7 @@ namespace ABSA_Assignment
             return null;
         }
 
-        private static Rootobject LoadJson()
+        private Rootobject LoadJson()
         {
             try
             {
@@ -258,20 +185,21 @@ namespace ABSA_Assignment
                 return null;
             }
         }
+
         private class Rootobject
         {
-            public User[] users { get; set; }
+            public User[] Users { get; set; }
         }
 
         private class User
         {
-            public string firstName { get; set; }
-            public string lastName { get; set; }
-            public string password { get; set; }
-            public string customer { get; set; }
-            public string role { get; set; }
-            public string email { get; set; }
-            public string cellPhone { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Password { get; set; }
+            public string Customer { get; set; }
+            public string Role { get; set; }
+            public string Email { get; set; }
+            public string CellPhone { get; set; }
         }
 
 

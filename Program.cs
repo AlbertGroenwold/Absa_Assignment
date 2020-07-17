@@ -1,19 +1,47 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ABSA_Assignment
 {
+    [TestClass]
     class Program
     {
-        static void Main(string[] args)
+
+        private TestContext testContext;
+
+        public TestContext TestContext
         {
-            var reportTask1 = Task1.run();
+            get
+            {
+                return testContext;
+            }
+            set
+            {
+                testContext = value;
+            }
+        }
 
-            reportTask1.Flush();
+        [TestInitialize]
+        public void TestInitialize()
+        {
+        }
 
-            var reportTask2 = Task2.run();
+        [TestMethod]
+        public void Task1()
+        {
+            Task1 runner = new Task1();
+            runner.Run();
+        }
 
-            reportTask2.Flush();
+        [TestMethod]
+        public void Task2()
+        {
+            Task2 runner = new Task2();
+            runner.Run();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
         }
     }
 }

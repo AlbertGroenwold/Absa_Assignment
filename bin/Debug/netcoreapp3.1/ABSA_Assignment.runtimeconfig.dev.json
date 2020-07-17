@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\ajgro\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\ajgro\\.nuget\\packages"
-    ]
-  }
-}

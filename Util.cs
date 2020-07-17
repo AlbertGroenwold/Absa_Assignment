@@ -1,20 +1,24 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace ABSA_Assignment
 {
     public class Util
     {
 
-        private static ExtentTest curTest;
-        private static string path;
+        private ExtentTest curTest;
+        private string path;
+        private AventStack.ExtentReports.ExtentReports report;
+        private ChromeDriver driver;
 
-        public static IRestResponse Get(string api)
+        public IRestResponse Get(string api)
         {
             var client = new RestClient(api);
             client.Timeout = -1;
@@ -24,49 +28,52 @@ namespace ABSA_Assignment
             return response;
         }
 
-        public static AventStack.ExtentReports.ExtentReports CreateReport(string test, string task)
+        public void CreateReport(string test, string task)
         {
             path = AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\Reports\"+task+@"\" + DateTime.Now.ToString("HH-mm dd-MM-yyyy") + @"\";
             var htmlReport = new ExtentHtmlReporter(path);
-            var report = new AventStack.ExtentReports.ExtentReports();
+            report = new AventStack.ExtentReports.ExtentReports();
             report.AttachReporter(htmlReport);
-            report = CreateTest(test, report);
+            CreateTest(test);
             report.Flush();
-
-            return report;
         }
 
-        public static AventStack.ExtentReports.ExtentReports CreateTest(string TestName, AventStack.ExtentReports.ExtentReports report = null, string task = null)
+        public void CreateTest(string TestName, string task = null)
         {
             if (report == null)
             {
-                report = CreateReport(TestName,task);
+                CreateReport(TestName,task);
             }
             else
             {
+                report.Flush();
                 if (curTest == null || curTest.Model.Name != TestName)
                 {
                     curTest = report.CreateTest(TestName);
                     report.Flush();
                 }
             }
-
-            return report;
         }
 
-        public static string Pass(string msg)
+        public string Pass(string msg)
         {
             curTest.Pass(msg);
             return null;
         }
 
-        public static string Fail(string msg)
+        public string Fail(string msg)
         {
             curTest.Fail(msg);
             return null;
         }
 
-        public static ChromeDriver LaunchDriver()
+        public void EndTest(string msg)
+        {
+            curTest.Pass(msg);
+            report.Flush();
+        }
+
+        public void LaunchDriver()
         {
             ChromeDriverService chrome = ChromeDriverService.CreateDefaultService(AppDomain.CurrentDomain.BaseDirectory);
             var chromeOptions = new ChromeOptions();
@@ -75,20 +82,92 @@ namespace ABSA_Assignment
             chromeOptions.AddUserProfilePreference("download.prompt_for_download", false);
             chromeOptions.AddUserProfilePreference("safebrowsing.enabled", true);
 
-            ChromeDriver driver = new ChromeDriver(chrome, chromeOptions);
+            driver = new ChromeDriver(chrome, chromeOptions);
             driver.Manage().Window.Maximize();
-
-            return driver;
         }
 
-        public static string ShutDown(ChromeDriver driver, AventStack.ExtentReports.ExtentReports report = null)
+        public string Navigate(string url)
+        {
+            driver.Navigate().GoToUrl(url);
+
+            return null;
+        }
+
+        public string Click(By ele)
+        {
+            try
+            {
+                driver.FindElement(ele).Click();
+                return null;
+            }
+            catch
+            {
+                return Fail("Could not click - " + ele.ToString()); ;
+            }
+        }
+
+        public string Wait(By ele, int num)
+        {
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(num));
+                wait.Until(drv => drv.FindElement(ele));
+                wait.Until(drv => drv.FindElement(ele).Displayed);
+                wait.Until(drv => drv.FindElement(ele).Enabled);
+
+                return null;
+            }
+            catch
+            {
+                return Fail("Could not wait for - " + ele.ToString()); ;
+            }
+        }
+
+        public string Enter(By ele, string input)
+        {
+            try
+            {
+                IWebElement element = driver.FindElement(ele);
+                element.Click();
+                element.Clear();
+                element.SendKeys(input);
+
+                return null;
+            }
+            catch
+            {
+                return Fail("Could not enter " + input + " into " + ele.ToString()); ;
+            }
+        }
+
+        public string Select(By ele, string input)
+        {
+            try
+            {
+                SelectElement element = new SelectElement(driver.FindElement(ele));
+                element.SelectByText(input);
+
+                return null;
+            }
+            catch
+            {
+                return Fail("Could not select " + input + " from " + ele.ToString()); ;
+            }
+        }
+
+        public IList<IWebElement> FindElements(By ele)
+        {
+            IList<IWebElement> list = driver.FindElements(ele).ToList();
+
+            return list;
+        }
+
+        public string ShutDown()
         {
             try
             {
                 driver.Close();
                 driver.Quit();
-
-                if (report != null) report.Flush();
 
                 return null;
             }

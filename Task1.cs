@@ -1,30 +1,25 @@
-﻿using AventStack.ExtentReports;
-using RestSharp;
-using RestSharp.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RestSharp;
 
 namespace ABSA_Assignment
 {
     class Task1 : Util
     {
 
-        public static AventStack.ExtentReports.ExtentReports run()
+        public void Run()
         {
-            var report = GetList();
+            GetList();
 
-            GetRetrieverList(report);
+            GetRetrieverList();
 
-            GetRandomImage(report);
+            GetRandomImage();
 
-            return report;
+            EndTest("Task 1 Completed");
         }
 
-        public static AventStack.ExtentReports.ExtentReports GetList()
+        public void GetList()
         {
 
-            AventStack.ExtentReports.ExtentReports report = CreateTest("Get List",null, "Task1");
+            CreateTest("Get List","Task1");
 
             IRestResponse response = Get("https://dog.ceo/api/breeds/list/all");
 
@@ -33,33 +28,25 @@ namespace ABSA_Assignment
             bool retriever = response.Content.Contains("retriever");
 
             Pass(retriever.ToString());
-
-            return report;
         }
 
-        public static AventStack.ExtentReports.ExtentReports GetRetrieverList(AventStack.ExtentReports.ExtentReports report)
+        public void GetRetrieverList()
         {
-            CreateTest("Get Retriever List", report);
+            CreateTest("Get Retriever List");
 
             IRestResponse response = Get("https://dog.ceo/api/breed/retriever/list");
 
             Pass(response.Content);
-
-            return report;
-
         }
 
-        public static AventStack.ExtentReports.ExtentReports GetRandomImage(AventStack.ExtentReports.ExtentReports report)
+        public void GetRandomImage()
         {
 
-            CreateTest("Get Random Image", report);
+            CreateTest("Get Random Image");
 
             IRestResponse response = Get("https://dog.ceo/api/breed/retriever/golden/images/random");
 
             Pass(response.Content);
-
-            return report;
-
         }
 
 

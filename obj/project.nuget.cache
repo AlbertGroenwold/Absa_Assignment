@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "hTqDGjX/xZnNllStWbCHsfeqDYJ0lbF9LqR9KIuTkSm74Rg8qeNSRXKZIDhzqZ5auAY+DgZPKTLwbQYfvPgYBQ==",
+  "dgSpecHash": "85uVeJg2lR1QvbImrd93Vw3cMsS4IdoohHEBjr1KL4zgB/nV9fl2eXPAxg0ooPZulY2ZK/MDHOAkWj0LNB7cng==",
   "success": true,
   "projectFilePath": "C:\\ABSA_Assignment\\ABSA_Assignment.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,8 @@
     "C:\\Users\\ajgro\\.nuget\\packages\\mongodb.bson\\2.8.0\\mongodb.bson.2.8.0.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\mongodb.driver\\2.8.0\\mongodb.driver.2.8.0.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\mongodb.driver.core\\2.8.0\\mongodb.driver.core.2.8.0.nupkg.sha512",
+    "C:\\Users\\ajgro\\.nuget\\packages\\mstest.testadapter\\2.1.2\\mstest.testadapter.2.1.2.nupkg.sha512",
+    "C:\\Users\\ajgro\\.nuget\\packages\\mstest.testframework\\2.1.2\\mstest.testframework.2.1.2.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\razorengine.netcore\\2.2.6\\razorengine.netcore.2.2.6.nupkg.sha512",
@@ -62,9 +64,9 @@
     "C:\\Users\\ajgro\\.nuget\\packages\\system.diagnostics.fileversioninfo\\4.3.0\\system.diagnostics.fileversioninfo.4.3.0.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\system.diagnostics.process\\4.1.0\\system.diagnostics.process.4.1.0.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\system.diagnostics.stacktrace\\4.3.0\\system.diagnostics.stacktrace.4.3.0.nupkg.sha512",
-    "C:\\Users\\ajgro\\.nuget\\packages\\system.diagnostics.textwritertracelistener\\4.0.0\\system.diagnostics.textwritertracelistener.4.0.0.nupkg.sha512",
+    "C:\\Users\\ajgro\\.nuget\\packages\\system.diagnostics.textwritertracelistener\\4.3.0\\system.diagnostics.textwritertracelistener.4.3.0.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\system.diagnostics.tools\\4.3.0\\system.diagnostics.tools.4.3.0.nupkg.sha512",
-    "C:\\Users\\ajgro\\.nuget\\packages\\system.diagnostics.tracesource\\4.0.0\\system.diagnostics.tracesource.4.0.0.nupkg.sha512",
+    "C:\\Users\\ajgro\\.nuget\\packages\\system.diagnostics.tracesource\\4.3.0\\system.diagnostics.tracesource.4.3.0.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\system.diagnostics.tracing\\4.3.0\\system.diagnostics.tracing.4.3.0.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\system.dynamic.runtime\\4.3.0\\system.dynamic.runtime.4.3.0.nupkg.sha512",
     "C:\\Users\\ajgro\\.nuget\\packages\\system.globalization\\4.3.0\\system.globalization.4.3.0.nupkg.sha512",
