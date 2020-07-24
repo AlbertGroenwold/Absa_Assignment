@@ -1,4 +1,5 @@
 ﻿using RestSharp;
+using System.Net;
 
 namespace ABSA_Assignment
 {
@@ -16,42 +17,50 @@ namespace ABSA_Assignment
 
         public void GetList()
         {
-
-            //CreateTest("Get List","Task1");
-
             IRestResponse response = rest.Get("breeds/list/all");
-            var s  = response.StatusCode;//validate status
-            //validate content
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                //validate content
+                report.Pass(response.Content);
 
+                bool retriever = response.Content.Contains("retriever");
 
-            report.Pass(response.Content);
-
-            bool retriever = response.Content.Contains("retriever");
-
-            report.Pass(retriever.ToString());
+                report.Pass(retriever.ToString());
+            }
+            else
+            {
+                report.Fail("Didn't get a response");
+            }
         }
 
         public void GetRetrieverList()
         {
-            //CreateTest("Get Retriever List");
-
             IRestResponse response = rest.Get("breed/retriever/list");
-            var s = response.StatusCode;//validate status
-            //validate content
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                //validate content
 
-            report.Pass(response.Content);
+                report.Pass(response.Content);
+            }
+            else
+            {
+                report.Fail("Didn't get a response");
+            }
         }
 
         public void GetRandomImage()
         {
-
-            //CreateTest("Get Random Image");
-
             IRestResponse response = rest.Get("/breed/retriever/golden/images/random");
-            var s = response.StatusCode;//validate status
-            //validate content
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                //validate content
 
-            report.Pass(response.Content);
+                report.Pass(response.Content);
+            }
+            else
+            {
+                report.Fail("Didn't get a response");
+            }
         }
 
 

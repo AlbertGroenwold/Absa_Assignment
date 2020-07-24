@@ -3,7 +3,7 @@
 namespace ABSA_Assignment
 {
     [TestClass]
-    class Program
+    public class Program
     {
 
         private TestContext testContext;
