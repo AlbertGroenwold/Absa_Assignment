@@ -29,7 +29,7 @@ namespace ABSA_Assignment
             }
             else
             {
-                report.Fail("Didn't get a response");
+                report.Fail("Didn't get a response for list of dogs");
             }
         }
 
@@ -44,13 +44,13 @@ namespace ABSA_Assignment
             }
             else
             {
-                report.Fail("Didn't get a response");
+                report.Fail("Didn't get a response for Retriever List");
             }
         }
 
         public void GetRandomImage()
         {
-            IRestResponse response = rest.Get("/breed/retriever/golden/images/random");
+            IRestResponse response = rest.Get("breed/retriever/golden/images/random");
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 //validate content
@@ -59,7 +59,7 @@ namespace ABSA_Assignment
             }
             else
             {
-                report.Fail("Didn't get a response");
+                report.Fail("Didn't get a response for a Random Image");
             }
         }
 

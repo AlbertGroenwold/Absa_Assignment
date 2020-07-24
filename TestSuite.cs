@@ -3,11 +3,11 @@
 namespace ABSA_Assignment
 {
     [TestClass]
-    public class Program
+    public class TestSuite
     {
 
         private TestContext testContext;
-        Application app { get; set; }
+        static Application app { get; set; }
 
         public TestContext TestContext
         {
@@ -21,8 +21,8 @@ namespace ABSA_Assignment
             }
         }
 
-        [TestInitialize]
-        public void TestInitialize()
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext testContext)
         {
             app = new Application();
         }
@@ -31,6 +31,7 @@ namespace ABSA_Assignment
         public void Task1()
         {
             app.report.test = TestContext.TestName;
+
             app.task1.GetList();
 
             app.task1.GetRetrieverList();
@@ -59,6 +60,12 @@ namespace ABSA_Assignment
         public void TestCleanup()
         {
             app.report.EndTest(TestContext.TestName + " Completed");
+        }
+
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            app.report.OpenReport();
         }
     }
 }

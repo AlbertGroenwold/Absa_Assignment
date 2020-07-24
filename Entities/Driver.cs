@@ -1,24 +1,21 @@
-﻿using AventStack.ExtentReports;
-using AventStack.ExtentReports.Reporter;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ABSA_Assignment
 {
-    public class Util
+    public class Driver
     {
         private string path { get; set; }
-        public Util(string path)
+        public Driver(string path)
         {
             this.path = path;
         }
 
-        private ChromeDriver driver { get; set; }
+        public ChromeDriver driver { get; set; }
 
         public ChromeDriver LaunchDriver()
         {
@@ -85,6 +82,8 @@ namespace ABSA_Assignment
 
             return list;
         }
+
+        
 
         public string ShutDown()
         {

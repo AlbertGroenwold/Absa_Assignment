@@ -36,10 +36,10 @@ namespace ABSA_Assignment
 
         private readonly By save = By.XPath("//button[text()='Save']");
 
-        private Util util { get; set; }
+        private Driver util { get; set; }
         private Report report { get; set; }
 
-        public Task2(Util util, Report report)
+        public Task2(Driver util, Report report)
         {
             this.util = util;
             this.report = report;
@@ -158,7 +158,7 @@ namespace ABSA_Assignment
             {
                 foreach (DataRow row in table.Rows)
                 {
-                    if (row["User Name"].ToString().Equals(user)) { report.Pass(user + "has been added"); break; }
+                    if (row["User Name"].ToString().Equals(user)) { report.Pass(user + " has been added"); break; }
                 }
             }
 

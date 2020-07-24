@@ -1,7 +1,4 @@
 ﻿using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ABSA_Assignment
 {
@@ -12,8 +9,8 @@ namespace ABSA_Assignment
 
         public IRestResponse Get(string api)
         {
-            var client = new RestClient(basAPI + api);
-            client.Timeout = -1;
+            var client = new RestClient(basAPI + api) { Timeout = -1 };
+
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
 

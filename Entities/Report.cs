@@ -1,8 +1,6 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 
 namespace ABSA_Assignment
 {
@@ -14,6 +12,7 @@ namespace ABSA_Assignment
 
         private ExtentTest curTest;
         private AventStack.ExtentReports.ExtentReports report;
+
 
         public Report(string path)
         {
@@ -31,7 +30,6 @@ namespace ABSA_Assignment
 
         public void CreateTest()
         {
-            //one report
             if (report == null)
             {
                 CreateReport();
@@ -68,6 +66,11 @@ namespace ABSA_Assignment
             CheckTest();
             curTest.Pass(msg);
             report.Flush();
+        }
+
+        public void OpenReport()
+        {
+            Process.Start(new ProcessStartInfo(path+@"/index.html") { UseShellExecute = true});
         }
     }
 }
