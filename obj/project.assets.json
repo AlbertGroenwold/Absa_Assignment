@@ -7956,11 +7956,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\ABSA_Assignment\\ABSA_Assignment.csproj",
+      "projectUniqueName": "C:\\ABSAA_Assignment\\ABSA_Assignment.csproj",
       "projectName": "ABSA_Assignment",
-      "projectPath": "C:\\ABSA_Assignment\\ABSA_Assignment.csproj",
+      "projectPath": "C:\\ABSAA_Assignment\\ABSA_Assignment.csproj",
       "packagesPath": "C:\\Users\\ajgro\\.nuget\\packages\\",
-      "outputPath": "C:\\ABSA_Assignment\\obj\\",
+      "outputPath": "C:\\ABSAA_Assignment\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ajgro\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -12,70 +12,15 @@ namespace ABSA_Assignment
 {
     public class Util
     {
-
-        private ExtentTest curTest;
-        private string path;
-        private AventStack.ExtentReports.ExtentReports report;
-        private ChromeDriver driver;
-        
-        //split them up in different classess
-        public IRestResponse Get(string api)
+        private string path { get; set; }
+        public Util(string path)
         {
-            var client = new RestClient(api);
-            client.Timeout = -1;
-            var request = new RestRequest(Method.GET);
-            IRestResponse response = client.Execute(request);
-
-            return response;
+            this.path = path;
         }
 
-        public void CreateReport(string test, string task)
-        {
-            path = AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\Reports\"+task+@"\" + DateTime.Now.ToString("HH-mm dd-MM-yyyy") + @"\";
-            var htmlReport = new ExtentHtmlReporter(path);
-            report = new AventStack.ExtentReports.ExtentReports();
-            report.AttachReporter(htmlReport);
-            CreateTest(test);
-            report.Flush();
-        }
+        private ChromeDriver driver { get; set; }
 
-        public void CreateTest(string TestName, string task = null)
-        {
-            //one report
-            if (report == null)
-            {
-                CreateReport(TestName,task);
-            }
-            else
-            {
-                report.Flush();
-                if (curTest == null || curTest.Model.Name != TestName)
-                {
-                    curTest = report.CreateTest(TestName);
-                    report.Flush();
-                }
-            }
-        }
-
-        public string Pass(string msg)
-        {
-            curTest.Pass(msg);
-            return null;
-        }
-
-        public string Fail(string msg)
-        {
-            curTest.Fail(msg);
-            return null;
-        }
-
-        public void EndTest(string msg)
-        {
-            curTest.Pass(msg);
-            report.Flush();
-        }
-
-        public void LaunchDriver()
+        public ChromeDriver LaunchDriver()
         {
             ChromeDriverService chrome = ChromeDriverService.CreateDefaultService(AppDomain.CurrentDomain.BaseDirectory);
             var chromeOptions = new ChromeOptions();
@@ -86,6 +31,8 @@ namespace ABSA_Assignment
 
             driver = new ChromeDriver(chrome, chromeOptions);
             driver.Manage().Window.Maximize();
+
+            return driver;
         }
 
         public string Navigate(string url)
@@ -97,64 +44,39 @@ namespace ABSA_Assignment
 
         public string Click(By ele)
         {
-            try
-            {
-                driver.FindElement(ele).Click();//no wait
-                return null;
-            }
-            catch
-            {
-                return Fail("Could not click - " + ele.ToString()); ;
-            }
+            Find(ele).Click();
+            return null;
         }
 
-        public string Wait(By ele, int num)
+        public IWebElement Find(By ele, int num = 15)
         {
-            try
-            {
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(num));
-                wait.Until(drv => drv.FindElement(ele));
-                wait.Until(drv => drv.FindElement(ele).Displayed);
-                wait.Until(drv => drv.FindElement(ele).Enabled);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(num));
+            wait.Until(drv => drv.FindElement(ele));
+            wait.Until(drv => drv.FindElement(ele).Displayed);
+            wait.Until(drv => drv.FindElement(ele).Enabled);
 
-                return null;//why return null - return element
-            }
-            catch
-            {
-                return Fail("Could not wait for - " + ele.ToString()); ;
-            }
+            return driver.FindElement(ele);
         }
 
         public string Enter(By ele, string input)
         {
-            try
-            {
-                IWebElement element = driver.FindElement(ele);
-                element.Click();
-                element.Clear();
-                element.SendKeys(input);
+            IWebElement element = Find(ele);
+            element.Click();
+            element.Clear();
+            element.SendKeys(input);
 
-                return null;
-            }
-            catch
-            {
-                return Fail("Could not enter " + input + " into " + ele.ToString()); ;
-            }
+            return null;
         }
 
         public string Select(By ele, string input)
         {
-            try
-            {
-                SelectElement element = new SelectElement(driver.FindElement(ele));
-                element.SelectByText(input);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            wait.Until(drv => drv.FindElements(ele));
 
-                return null;
-            }
-            catch
-            {
-                return Fail("Could not select " + input + " from " + ele.ToString()); ;
-            }
+            SelectElement element = new SelectElement(Find(ele));
+            element.SelectByText(input);
+
+            return null;
         }
 
         public IList<IWebElement> FindElements(By ele)
@@ -175,7 +97,7 @@ namespace ABSA_Assignment
             }
             catch (Exception e)
             {
-                return "Could not close driver - " + e.Message;
+                return "Could not close driver - " + e.StackTrace;
             }
         }
 

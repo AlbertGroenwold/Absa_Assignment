@@ -10,9 +10,11 @@ using System.Linq;
 
 namespace ABSA_Assignment
 {
-    class Task2 : Util
+    class Task2
     {
         private readonly IList<string> users = new List<string>();
+
+        IList<string> newUserName;
 
         private readonly int maxLoops = 5;
 
@@ -32,66 +34,58 @@ namespace ABSA_Assignment
         private readonly By email = By.XPath("//input[@name='Email']");
         private readonly By cellPhone = By.XPath("//input[@name='Mobilephone']");
 
-        private  readonly By save = By.XPath("//button[text()='Save']");
+        private readonly By save = By.XPath("//button[text()='Save']");
 
-        public void Run()
+        private Util util { get; set; }
+        private Report report { get; set; }
+
+        public Task2(Util util, Report report)
         {
-            CreateTest("ValidateUserIsPresent", "Task2");
+            this.util = util;
+            this.report = report;
+        }
 
-            LaunchDriver();
-
-            Navigate(url);
-
-            ValidateUserIsPresent("User Name", "novak");
-
-            CreateTest("Create new users");
-
+        public void AddUsers()
+        {
+            
             var users = LoadJson().Users;
 
-            IList<string> newUserName = new List<string>();
+            newUserName = new List<string>();
 
             foreach (User user in users)
             {
 
-                Click(addUser);
+                util.Click(addUser);
 
-                Enter(firstName, user.FirstName);
+                util.Enter(firstName, user.FirstName);
 
-                Enter(lastName, user.LastName);
+                util.Enter(lastName, user.LastName);
 
                 string value = getUser();
                 newUserName.Add(value);
 
-                Enter(userName, value);
+                util.Enter(userName, value);
 
-                Enter(password, user.Password);
+                util.Enter(password, user.Password);
 
-                if (user.Customer.Contains("AAA")) Click(customerAAA);
-                else if (user.Customer.Contains("BBB")) Click(customerBBB);
+                if (user.Customer.Contains("AAA")) util.Click(customerAAA);
+                else if (user.Customer.Contains("BBB")) util.Click(customerBBB);
 
-                Select(role, user.Role);
+                util.Select(role, user.Role);
 
-                Enter(email, user.Email);
+                util.Enter(email, user.Email);
 
-                Enter(cellPhone, user.CellPhone);
+                util.Enter(cellPhone, user.CellPhone);
 
-                Pass("User details entered");
+                report.Pass("User details entered");
 
-                Click(save);
+                util.Click(save);
             }
 
-            CreateTest("Validate new users");
-
-            ValidateNewUsersIsPresent(newUserName);
-
-            EndTest("Task 2 Completed");
-
-            ShutDown();
+            
         }
 
-        
-
-        private string getUser(int num = 1)
+        public string getUser(int num = 1)
         {
             string user = "";
             bool go = false;
@@ -115,10 +109,10 @@ namespace ABSA_Assignment
             return user;
         }
 
-        private DataTable LoadTable()
+        public DataTable LoadTable()
         {
-            IList<IWebElement> cols = FindElements(header);
-            IList<IWebElement> rows = FindElements(body);
+            IList<IWebElement> cols = util.FindElements(header);
+            IList<IWebElement> rows = util.FindElements(body);
 
             DataTable table = new DataTable();
 
@@ -139,29 +133,32 @@ namespace ABSA_Assignment
             return table;
         }
 
-        private string ValidateUserIsPresent(string colName, string value)
+        public string ValidateUserIsPresent(string colName, string value)
         {
+
+            util.Navigate(url);
+
             DataTable table = LoadTable();
 
             foreach (DataRow row in table.Rows) users.Add(row["User Name"].ToString()); ;
 
             foreach (DataRow row in table.Rows)
             {
-                if (row[colName].ToString().Equals(value)) return Pass("User '" + value + "' is present");
+                if (row[colName].ToString().Equals(value)) return report.Pass("User '" + value + "' is present");
             }
 
-            return Fail("Could not find the user");
+            return report.Fail("Could not find the user");
         }
 
-        private string ValidateNewUsersIsPresent(IList<string> users)
+        public string ValidateNewUsersIsPresent()
         {
             DataTable table = LoadTable();
 
-            foreach (string user in users)
+            foreach (string user in newUserName)
             {
                 foreach (DataRow row in table.Rows)
                 {
-                    if (row["User Name"].ToString().Equals(user)) { Pass(user + "has been added"); break; }
+                    if (row["User Name"].ToString().Equals(user)) { report.Pass(user + "has been added"); break; }
                 }
             }
 
@@ -181,7 +178,7 @@ namespace ABSA_Assignment
             }
             catch
             {
-                Fail("Could not load data");
+                report.Fail("Could not load data");
                 return null;
             }
         }

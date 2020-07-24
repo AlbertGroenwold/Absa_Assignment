@@ -2,51 +2,56 @@
 
 namespace ABSA_Assignment
 {
-    class Task1 : Util
+    class Task1
     {
 
-        public void Run()
+        private REST rest { get; set; }
+        private Report report { get; set; }
+
+        public Task1(REST rest, Report report)
         {
-            GetList();
-
-            GetRetrieverList();
-
-            GetRandomImage();
-
-            EndTest("Task 1 Completed");
+            this.rest = rest;
+            this.report = report;
         }
 
         public void GetList()
         {
 
-            CreateTest("Get List","Task1");
+            //CreateTest("Get List","Task1");
 
-            IRestResponse response = Get("https://dog.ceo/api/breeds/list/all");//validate status
+            IRestResponse response = rest.Get("breeds/list/all");
+            var s  = response.StatusCode;//validate status
+            //validate content
 
-            Pass(response.Content);//validate content
+
+            report.Pass(response.Content);
 
             bool retriever = response.Content.Contains("retriever");
 
-            Pass(retriever.ToString());
+            report.Pass(retriever.ToString());
         }
 
         public void GetRetrieverList()
         {
-            CreateTest("Get Retriever List");
+            //CreateTest("Get Retriever List");
 
-            IRestResponse response = Get("https://dog.ceo/api/breed/retriever/list");
+            IRestResponse response = rest.Get("breed/retriever/list");
+            var s = response.StatusCode;//validate status
+            //validate content
 
-            Pass(response.Content);
+            report.Pass(response.Content);
         }
 
         public void GetRandomImage()
         {
 
-            CreateTest("Get Random Image");
+            //CreateTest("Get Random Image");
 
-            IRestResponse response = Get("https://dog.ceo/api/breed/retriever/golden/images/random");
+            IRestResponse response = rest.Get("/breed/retriever/golden/images/random");
+            var s = response.StatusCode;//validate status
+            //validate content
 
-            Pass(response.Content);
+            report.Pass(response.Content);
         }
 
 
