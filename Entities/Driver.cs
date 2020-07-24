@@ -9,7 +9,7 @@ namespace ABSA_Assignment
 {
     public class Driver
     {
-        private string path { get; set; }
+        private string path;
         public Driver(string path)
         {
             this.path = path;

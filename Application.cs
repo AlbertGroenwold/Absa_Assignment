@@ -17,7 +17,7 @@ namespace ABSA_Assignment
 
             util = new Driver(path);
             report = new Report(path);
-            rest = new REST();
+            rest = new REST(@"https://dog.ceo/api/");
 
             task1 = new Task1(rest, report);//this feels wrong af
             task2 = new Task2(util,report);

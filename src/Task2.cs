@@ -12,11 +12,6 @@ namespace ABSA_Assignment
 {
     class Task2
     {
-        private readonly IList<string> users = new List<string>();
-
-        IList<string> newUserName;
-
-        private readonly int maxLoops = 5;
 
         private readonly string url = "http://www.way2automation.com/angularjs-protractor/webtables/";
 
@@ -36,8 +31,13 @@ namespace ABSA_Assignment
 
         private readonly By save = By.XPath("//button[text()='Save']");
 
-        private Driver util { get; set; }
-        private Report report { get; set; }
+
+        private Driver util;
+        private Report report;
+
+        private IList<string> newUserName;
+        private readonly int maxLoops = 5;
+        private readonly IList<string> users = new List<string>();
 
         public Task2(Driver util, Report report)
         {

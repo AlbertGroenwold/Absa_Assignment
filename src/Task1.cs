@@ -6,8 +6,8 @@ namespace ABSA_Assignment
     class Task1
     {
 
-        private REST rest { get; set; }
-        private Report report { get; set; }
+        private REST rest;
+        private Report report;
 
         public Task1(REST rest, Report report)
         {
