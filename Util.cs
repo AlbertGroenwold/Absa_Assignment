@@ -17,7 +17,8 @@ namespace ABSA_Assignment
         private string path;
         private AventStack.ExtentReports.ExtentReports report;
         private ChromeDriver driver;
-
+        
+        //split them up in different classess
         public IRestResponse Get(string api)
         {
             var client = new RestClient(api);
@@ -40,6 +41,7 @@ namespace ABSA_Assignment
 
         public void CreateTest(string TestName, string task = null)
         {
+            //one report
             if (report == null)
             {
                 CreateReport(TestName,task);
@@ -97,7 +99,7 @@ namespace ABSA_Assignment
         {
             try
             {
-                driver.FindElement(ele).Click();
+                driver.FindElement(ele).Click();//no wait
                 return null;
             }
             catch
@@ -115,7 +117,7 @@ namespace ABSA_Assignment
                 wait.Until(drv => drv.FindElement(ele).Displayed);
                 wait.Until(drv => drv.FindElement(ele).Enabled);
 
-                return null;
+                return null;//why return null - return element
             }
             catch
             {

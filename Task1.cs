@@ -21,9 +21,9 @@ namespace ABSA_Assignment
 
             CreateTest("Get List","Task1");
 
-            IRestResponse response = Get("https://dog.ceo/api/breeds/list/all");
+            IRestResponse response = Get("https://dog.ceo/api/breeds/list/all");//validate status
 
-            Pass(response.Content);
+            Pass(response.Content);//validate content
 
             bool retriever = response.Content.Contains("retriever");
 
